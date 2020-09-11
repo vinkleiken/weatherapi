@@ -2,31 +2,21 @@ package ru.vkopyl.test.weatherapp.model;
 
 import java.util.Date;
 
-public class ResponceData {
+public class ResponseData {
 
-    int id;
     double maxAvgTemp;
     double avgTemp;
     double minAvgTemp;
     double maxWindSpeed;
 
-    public ResponceData(int id, double maxAvgTemp, double avgTemp, double minAvgTemp, double maxWindSpeed) {
-        this.id = id;
+    public ResponseData(double maxAvgTemp, double avgTemp, double minAvgTemp, double maxWindSpeed) {
         this.maxAvgTemp = maxAvgTemp;
         this.avgTemp = avgTemp;
         this.minAvgTemp = minAvgTemp;
         this.maxWindSpeed = maxWindSpeed;
     }
 
-    public ResponceData() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public ResponseData() {
     }
 
     public double getMaxAvgTemp() {
@@ -63,12 +53,10 @@ public class ResponceData {
 
     @Override
     public String toString() {
-        return "ResponceData{" +
-                "id=" + id +
-                ", maxAvgTemp=" + maxAvgTemp +
-                ", avgTemp=" + avgTemp +
-                ", minAvgTemp=" + minAvgTemp +
-                ", maxWindSpeed=" + maxWindSpeed +
+        return  "{\"maxAvgTemp\":" + maxAvgTemp +
+                ", \"avgTemp\":" + avgTemp +
+                ", \"minAvgTemp\":" + minAvgTemp +
+                ", \"maxWindSpeed\":" + maxWindSpeed +
                 '}';
     }
 }

@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.vkopyl.test.weatherapp.dao.ResponseDataDaoImpl;
+import ru.vkopyl.test.weatherapp.model.ResponseData;
 import ru.vkopyl.test.weatherapp.model.WeatherData;
 import ru.vkopyl.test.weatherapp.model.WeatherDataList;
 import ru.vkopyl.test.weatherapp.service.RestService;
@@ -20,18 +22,26 @@ public class WeatherController {
     private final String url = "http://api.weatherbit.io/v2.0/forecast/daily?key=368f56f6fdcb4ed68776b6c43b080540&city=novosibirsk";
     private final RestService restService;
     private final WeatherParser weatherParser;
+    private final ResponseDataDaoImpl responseDataDaoImpl;
 
     @Autowired
-    public WeatherController(RestService restService, WeatherParser weatherParser){
+    public WeatherController(RestService restService, WeatherParser weatherParser, ResponseDataDaoImpl responseDataDaoImpl){
 
         this.weatherParser = weatherParser;
         this.restService = restService;
+        this.responseDataDaoImpl = responseDataDaoImpl;
     }
 
     @GetMapping("/getweather")
     void getWeatherFromApi(){
         String responseJson = restService.getWeatherJson(url);
-
+        try{
+            ResponseData response = weatherParser.modifyData(weatherParser.parseWeather(responseJson));
+            responseDataDaoImpl.insert(response);
+            System.out.println(response);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 
