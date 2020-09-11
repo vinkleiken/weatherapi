@@ -8,7 +8,7 @@ import ru.vkopyl.test.weatherapp.model.ResponseData;
 @Repository
 public class ResponseDataDaoImpl implements ResponseDataDao {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     public ResponseDataDaoImpl(JdbcTemplate jdbcTemplate){
 

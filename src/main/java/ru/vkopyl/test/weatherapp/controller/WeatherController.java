@@ -2,15 +2,11 @@ package ru.vkopyl.test.weatherapp.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.vkopyl.test.weatherapp.dao.ResponseDataDaoImpl;
 import ru.vkopyl.test.weatherapp.model.ResponseData;
-import ru.vkopyl.test.weatherapp.model.WeatherData;
-import ru.vkopyl.test.weatherapp.model.WeatherDataList;
 import ru.vkopyl.test.weatherapp.service.RestService;
 import ru.vkopyl.test.weatherapp.service.WeatherParser;
 
@@ -33,17 +29,12 @@ public class WeatherController {
     }
 
     @GetMapping("/getweather")
-    void getWeatherFromApi(){
+    public ResponseData getWeatherFromApi() throws JsonProcessingException {
         String responseJson = restService.getWeatherJson(url);
-        try{
-            ResponseData response = weatherParser.modifyData(weatherParser.parseWeather(responseJson));
-            responseDataDaoImpl.insert(response);
-            System.out.println(response);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        ResponseData response = weatherParser.modifyData(weatherParser.parseWeather(responseJson));
+        responseDataDaoImpl.insert(response);
+        System.out.println(response);
+        return  response;
     }
-
-
 
 }
